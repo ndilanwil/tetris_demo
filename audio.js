@@ -10,12 +10,13 @@ const line = new Audio('./audio/success.wav');
     const audioElement = document.querySelector('audio');
     const playButton = document.querySelector('.music-button');
     playButton.addEventListener('click', function() {
-        if (playButton.dataset.playing === 'false'){
+        if (playButton.dataset.playing === 'false') {
             playButton.dataset.playing = 'true';
             audioElement.play();
-        } else{
+        } else {
             audioElement.pause();
             playButton.dataset.playing = 'false';
         }
     })
+
 })();
