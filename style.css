@@ -1,0 +1,45 @@
+* {
+    font-family: 'Press Start 2P', cursive;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 320px 200px;
+}
+
+.col1 {
+    background-color:#00a9ff;
+    border-radius
+}
+
+.col3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #e5b6e6;
+    border-radius: 20px;
+    right: 0px;
+    text: white;
+}
+.game-board {
+    border: solid 5px;
+    border-color: white;
+}
+
+.play-button {
+    background-color: violet;
+    font-size: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.music-button {
+    font-size: 12px;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+.footer {
+  font-size: x-small;
+}
