@@ -5,7 +5,7 @@
 Building a Tetris like game application with the use of html, css and javascript(nodejs in this case)
 
 ## Description
-The main aim of this project, was to test our javascript and web development skills by creating a Tetris Clone
+The main aim of this project, was to test my javascript and web development skills by creating a Tetris Clone
 The aim of the game is to make the maximum score possible. The score, levels and lines are added in function of the number of lines cleared
 For a line to be clear, All the row inside the playground must be filled
 
@@ -27,5 +27,4 @@ P and ESC respectively to Pause and Quit game
 ### The Core Team
 
 
-<span><i>Made at <a href='https://qwasar.io'>Qwasar Silicon Valley</a></i></span>
-<span><img alt='Qwasar Silicon Valley Logo' src='https://storage.googleapis.com/qwasar-public/qwasar-logo_50x50.png' width='20px'></span>
+<span><i>Made at <a href='https://github.com/ndilanwil'>Nuadje Dilan</a></i></span>
