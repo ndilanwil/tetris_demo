@@ -10,7 +10,7 @@ const ctxHold = canvasHold.getContext('2d');
 const audioElement = document.querySelector('audio');
 const playButton = document.querySelector('.music-button');
 
-let accountValues = {
+let accountValues= {
     score: 0,
     level: 0,
     lines: 0
