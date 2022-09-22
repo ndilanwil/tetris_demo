@@ -1,7 +1,6 @@
 const clear = new Audio('./audio/clear.wav');
 const gameover = new Audio('./audio/gameover.wav');
 const end = new Audio('./audio/end.wav');
-const move = new Audio('./audio/move.wav');
 const rotate = new Audio('./audio/rotate.wav');
 const fall = new Audio('./audio/fall.wav');
 const line = new Audio('./audio/success.wav');
