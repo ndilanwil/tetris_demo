@@ -44,11 +44,10 @@ class Board {
         let p = moves[KEY.DOWN](this.piece);
         if (this.valid(p)) {
             this.piece.move(p);
-        } 
-        else {
+        } else {
             this.freeze();
             this.clearLines();
-            if(this.piece.y === 0){
+            if (this.piece.y === 0) {
                 gameover.play();
                 return false;
             }
@@ -61,20 +60,20 @@ class Board {
         return true;
     }
 
-    clearLines(){
+    clearLines() {
         let lines = 0;
         this.grid.forEach((row, y) => {
-            if(row.every((value) => value > 0)){
+            if (row.every((value) => value > 0)) {
                 lines++;
                 this.grid.splice(y, 1);
                 clear.play();
                 this.grid.unshift(Array(COLS).fill(0));
             }
         });
-        if(lines > 0){
+        if (lines > 0) {
             account.score += this.getLinesClearedPoints(lines);
             account.lines += lines;
-            if(account.lines >= LINES_PER_LEVEL){
+            if (account.lines >= LINES_PER_LEVEL) {
                 account.level++;
                 account.lines -= LINES_PER_LEVEL;
                 time.level = LEVEL[account.level];
@@ -82,7 +81,7 @@ class Board {
         }
     }
 
-    valid(p){
+    valid(p) {
         return p.shape.every((row, dy) => {
             return row.every((value, dx) => {
                 let x = p.x + dx;
@@ -92,20 +91,20 @@ class Board {
         });
     }
 
-    freeze(){
+    freeze() {
         this.piece.shape.forEach((row, y) => {
             row.forEach((value, x) => {
-                if(value > 0){
+                if (value > 0) {
                     this.grid[y + this.piece.y][x + this.piece.x] = value;
                 }
             });
         });
     }
 
-    drawBoard(){
+    drawBoard() {
         this.grid.forEach((row, y) => {
             row.forEach((value, x) => {
-                if(value > 0){
+                if (value > 0) {
                     this.ctx.fillStyle = COLORS[value];
                     this.ctx.fillRect(x, y, 1, 1);
                 }
@@ -113,33 +112,32 @@ class Board {
         });
     }
 
-    getEmptyGrid(){
+    getEmptyGrid() {
         return Array.from({ length: ROWS }, () => Array(COLS).fill(0));
     }
 
-    isInsideWall(x, y){
+    isInsideWall(x, y) {
         return x >= 0 && x < COLS && y <= ROWS;
     }
 
-    notOccupied(x, y){
+    notOccupied(x, y) {
         return this.grid[y] && this.grid[y][x] === 0;
     }
 
-    rotate(piece, direction){
+    rotate(piece, direction) {
         let p = JSON.parse(JSON.stringify(piece));
-        if(!piece.hardDropped){
+        if (!piece.hardDropped) {
             //transpose matrice
-            for(let y = 0; y < p.shape.length; y++){
-                for(let x = 0; x < y; x++){
+            for (let y = 0; y < p.shape.length; y++) {
+                for (let x = 0; x < y; x++) {
                     [p.shape[x][y], p.shape[y][x]] = [p.shape[y][x], p.shape[x][y]];
                 }
             }
             //reverse columns orders
-            if(direction === ROTATION.RIGHT){
+            if (direction === ROTATION.RIGHT) {
                 p.shape.forEach((row) => row.reverse());
                 rotate.play();
-            } 
-              else if(direction === ROTATION.LEFT){
+            } else if (direction === ROTATION.LEFT) {
                 p.shape.reverse();
                 rotate.play();
             }
@@ -147,14 +145,13 @@ class Board {
         return p;
     }
 
-    swapPieces(){
-        if(!this.ctxHold.piece){
+    swapPieces() {
+        if (!this.ctxHold.piece) {
             //move current piece to hold and move next piece to current one
             this.ctxHold.piece = this.piece;
             this.piece = this.next;
             this.getNewPiece();
-        }
-        else{
+        } else {
             //swap current piece with hold
             let temp = this.piece;
             this.piece = this.ctxHold.piece;
@@ -163,17 +160,17 @@ class Board {
         this.ctxHold.piece.ctx = this.ctxHold;
         this.piece.ctx = this.ctx;
         this.piece.setStartingPosition();
-        this.hold=this.ctxHold.piece;
-        const { width,height } = this.ctxHold.canvas;
+        this.hold = this.ctxHold.piece;
+        const { width, height } = this.ctxHold.canvas;
         this.ctxHold.clearRect(0, 0, width, height);
         this.ctxHold.piece.x = 0;
         this.ctxHold.piece.y = 0;
         this.ctxHold.piece.draw();
-    }   
+    }
 
-    swap(){
+    swap() {
         //swap oonly once
-        if(this.piece.swapped){
+        if (this.piece.swapped) {
             return;
         }
         this.swapPieces();
@@ -181,17 +178,17 @@ class Board {
         return this.piece;
     }
 
-    getLinesClearedPoints(lines, level){
+    getLinesClearedPoints(lines, level) {
         const lineClearPoints =
-        lines === 1 
-            ? POINTS.SINGLE
-            : lines === 2 
-            ? POINTS.DOUBLE
-            : lines === 3 
-            ? POINTS.TRIPLE
-            : lines === 4 
-            ? POINTS.TETRIS
-            : 0;
+            lines === 1 ?
+            POINTS.SINGLE :
+            lines === 2 ?
+            POINTS.DOUBLE :
+            lines === 3 ?
+            POINTS.TRIPLE :
+            lines === 4 ?
+            POINTS.TETRIS :
+            0;
         return (account.level + 1) * lineClearPoints;
     }
 }
