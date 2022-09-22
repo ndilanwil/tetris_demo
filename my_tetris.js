@@ -62,6 +62,9 @@ function handleKeyPress(event) {
         audioElement.pause();
         pause();
     }
+    if (event.keyCode === KEY.M) {
+        audioElemrnt.pause();
+    }
     if (event.keyCode === KEY.ESC) {
         audioElement.pause();
         audioElement.currentTime = 0;
