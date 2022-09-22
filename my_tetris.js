@@ -10,7 +10,7 @@ const ctxHold = canvasHold.getContext('2d');
 const audioElement = document.querySelector('audio');
 const playButton = document.querySelector('.music-button');
 
-let accountValues= {
+let accountValues = {
     score: 0,
     level: 0,
     lines: 0
@@ -18,12 +18,12 @@ let accountValues= {
 
 function updateAccount(key, value) {
     let element = document.getElementById(key);
-    if(element) {
+    if (element) {
         element.textContent = value;
     }
 }
 
-let account= new Proxy(accountValues, {
+let account = new Proxy(accountValues, {
     set: (target, key, value) => {
         target[key] = value;
         updateAccount(key, value);
@@ -32,13 +32,13 @@ let account= new Proxy(accountValues, {
 });
 
 moves = {
-    [KEY.LEFT]:  (p) => ({ ...p, x: p.x - 1}),
-    [KEY.RIGHT]: (p) => ({ ...p, x: p.x + 1}),
-    [KEY.DOWN]:  (p) => ({ ...p, y: p.y + 1}),
-    [KEY.SPACE]: (p) => ({ ...p, y: p.y + 1}),
-    [KEY.UP]:    (p) => board.rotate(p, ROTATION.RIGHT),
-    [KEY.Q]:     (p) => board.rotate(p, ROTATION.LEFT),
-    [KEY.C]:     (p) => board.swap()
+    [KEY.LEFT]: (p) => ({...p, x: p.x - 1 }),
+    [KEY.RIGHT]: (p) => ({...p, x: p.x + 1 }),
+    [KEY.DOWN]: (p) => ({...p, y: p.y + 1 }),
+    [KEY.SPACE]: (p) => ({...p, y: p.y + 1 }),
+    [KEY.UP]: (p) => board.rotate(p, ROTATION.RIGHT),
+    [KEY.Q]: (p) => board.rotate(p, ROTATION.LEFT),
+    [KEY.C]: (p) => board.swap()
 };
 
 let board = new Board(ctx, ctxNext, ctxHold);
@@ -52,47 +52,44 @@ function initsidePanel(ctx) {
     ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
 }
 
-function addEventListener(){
+function addEventListener() {
     document.removeEventListener('keydown', handleKeyPress);
     document.addEventListener('keydown', handleKeyPress);
 }
 
-function handleKeyPress(event){
-    if (event.keyCode === KEY.P){
+function handleKeyPress(event) {
+    if (event.keyCode === KEY.P) {
         audioElement.pause();
         pause();
     }
-    if(event.keyCode === KEY.ESC){
+    if (event.keyCode === KEY.ESC) {
         audioElement.pause();
         audioElement.currentTime = 0;
         end.play();
         gameOver();
-    }
-    else if(moves[event.keyCode]){
+    } else if (moves[event.keyCode]) {
         event.preventDefault();
         let p = moves[event.keyCode](board.piece);
-        if(event.keyCode === KEY.SPACE){
+        if (event.keyCode === KEY.SPACE) {
             //hard drop
-            while(board.valid(p)){
+            while (board.valid(p)) {
                 account.score += POINTS.HARD_DROP;
                 board.piece.move(p);
                 p = moves[KEY.DOWN](board.piece);
             }
             board.piece.hardeDrop();
-        }
-        else if(board.valid(p)){
+        } else if (board.valid(p)) {
             board.piece.move(p);
-            if(event.keyCode === KEY.DOWN){
+            if (event.keyCode === KEY.DOWN) {
                 account.score += POINTS.SOFT_DROP;
             }
-        }
-        else{
+        } else {
             fall.play();
         }
     }
 }
 
-function resetGame(){
+function resetGame() {
     account.score = 0;
     account.lines = 0;
     account.level = 0;
@@ -103,37 +100,37 @@ function resetGame(){
 let requestId = null;
 let time = null;
 
-function play(){
+function play() {
     ctx.paused = false;
     addEventListener();
     //stard background music
     playButton.dataset.playing = 'true';
     audioElement.play();
     resetGame();
-    if(requestId){
+    if (requestId) {
         cancelAnimationFrame(requestId);
     }
     animate();
 }
 
-function animate(now = 0){
+function animate(now = 0) {
     time.elapsed = now - time.start;
-    if(time.elapsed > time.level){
+    if (time.elapsed > time.level) {
         time.start = now;
-        if(!board.drop()){
+        if (!board.drop()) {
             audioElement.pause();
-            audioElement.currentTime=0;
+            audioElement.currentTime = 0;
             gameOver();
             return;
         }
     }
     //clear board to draw new state
-    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     board.draw();
-    requestId=requestAnimationFrame(animate);
+    requestId = requestAnimationFrame(animate);
 }
 
-function gameOver(){
+function gameOver() {
     cancelAnimationFrame(requestId);
     requestId = null;
     ctx.fillStyle = 'black';
@@ -143,8 +140,8 @@ function gameOver(){
     ctx.fillText('GAME OVER', 1.8, 4);
 }
 
-function pause(){
-    if(!requestId){
+function pause() {
+    if (!requestId) {
         ctx.paused = true;
         timer();
     }
@@ -158,30 +155,29 @@ function pause(){
     ctx.paused = true;
 }
 
-function timer(e){
-    if(requestId){
+function timer(e) {
+    if (requestId) {
         audioElement.pause();
         pause();
-    }
-    else{
+    } else {
         let isPaused = ctx.paused;
-        if(!isPaused){
+        if (!isPaused) {
             //for new game, clear grid and reset bg music
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             audioElement.currentTime = 0;
         }
         let count = 3;
         document.getElementById('timer').innerHTML = count;
-        let counter = setInterval(countdown,1000);
-        function countdown(){
+        let counter = setInterval(countdown, 1000);
+
+        function countdown() {
             count -= 1;
             document.getElementById('timer').innerHTML = count;
-            if(count <= 0){
+            if (count <= 0) {
                 clearInterval(counter);
-                if(!isPaused){
+                if (!isPaused) {
                     play();
-                }
-                else{
+                } else {
                     //resume from pause
                     ctx.paused = false;
                     document.getElementById("timer").innerHTML = '';
@@ -195,4 +191,3 @@ function timer(e){
         }
     }
 }
- 
