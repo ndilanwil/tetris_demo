@@ -8,8 +8,8 @@
 }
 
 .col1 {
-    background-color:#00a9ff;
-    border-radius
+    background-color: #00a9ff;
+    border-radius: 20px;
 }
 
 .col3 {
@@ -21,6 +21,7 @@
     right: 0px;
     text: white;
 }
+
 .game-board {
     border: solid 5px;
     border-color: white;
@@ -40,6 +41,6 @@
     border-radius: 20px;
 }
 
-.footer{
-  font-size: x-small;
+.footer {
+    font-size: x-small;
 }
