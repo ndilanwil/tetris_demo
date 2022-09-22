@@ -20,14 +20,14 @@ function start_html_server() {
                 break;
             case '.js':
                 contentType = 'text/javascript';
-                break;    
+                break;
         }
         console.log(path);
-        response.writeHead(200, {"Content-Type": contentType});
+        response.writeHead(200, { "Content-Type": contentType });
         response.write(fs.readFileSync(path, 'utf8'));
         response.end();
     }).listen(port, hostname, () => {
-        console.log("Server running at http://web-m91215e3b-3ba8.docode.fi.qwasar.io");
+        console.log("Server running at localhost:8080");
         console.log("Replace XXXXXXXXX by your current workspace ID");
         console.log("(look at the URL of this page and XXXXXXXXXXXX.docode.YYYYY.qwasar.io, XXXXXXXX is your workspace ID and YYYYYYY is your zone)");
     });
