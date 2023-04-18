@@ -23,8 +23,9 @@ C: swap tetromino
 Down Arrow: soft Drop
 P and ESC respectively to Pause and Quit game
 
+<span><img alt='ndilanwil' src='https://media.licdn.com/dms/image/C4E22AQEnajjqLwXycA/feedshare-shrink_2048_1536/0/1663859153476?e=1684972800&v=beta&t=nHjkj3x_3Eqtip428vlij4ia2mBg9xv126kYHBRIGwM'></span>
 
 ### The Core Team
 
 
-<span><i>Made at <a href='https://github.com/ndilanwil'>Nuadje Dilan</a></i></span>
+<span><i>Made By <a href='https://github.com/ndilanwil'>Nuadje Dilan</a></i></span>
